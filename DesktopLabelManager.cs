@@ -133,6 +133,47 @@ public sealed class DesktopLabelManager : IDisposable
         else key.DeleteValue(RunValueName, throwOnMissingValue: false);
     }
 
+    // ---------- Workplace ----------
+
+    private WorkplaceWindow? _workplaceWindow;
+
+    public void OpenWorkplaceManager()
+    {
+        if (_workplaceWindow == null)
+        {
+            _workplaceWindow = new WorkplaceWindow(this);
+            _workplaceWindow.Closed += (_, _) => _workplaceWindow = null;
+            _workplaceWindow.Show();
+        }
+        if (_workplaceWindow.WindowState == WindowState.Minimized)
+            _workplaceWindow.WindowState = WindowState.Normal;
+        _workplaceWindow.Activate();
+    }
+
+    /// <summary>Runs the option's commands through cmd.exe (hidden console window).</summary>
+    public void RunWorkplace(WorkplaceOption option)
+    {
+        if (string.IsNullOrWhiteSpace(option.Command)) return;
+        try
+        {
+            // A temp batch file lets multi-line commands work as written.
+            string file = System.IO.Path.Combine(System.IO.Path.GetTempPath(), $"winlabeler-{Guid.NewGuid():N}.cmd");
+            System.IO.File.WriteAllText(file, "@echo off\r\n" + option.Command.Replace("\r\n", "\n").Replace("\n", "\r\n")
+                + "\r\ndel \"%~f0\" >nul 2>nul\r\n");
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = "cmd.exe",
+                Arguments = $"/c \"\"{file}\"\"",
+                UseShellExecute = false,
+                CreateNoWindow = true,
+            });
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, $"Workplace: {option.Label}", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+    }
+
     public void Exit()
     {
         Dispose();

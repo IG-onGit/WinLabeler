@@ -15,10 +15,17 @@ public sealed class DesktopSettings
     public Corner Corner { get; set; } = Corner.BottomLeft;
 }
 
+public sealed class WorkplaceOption
+{
+    public string Label { get; set; } = "";
+    public string Command { get; set; } = "";     // run through cmd.exe
+}
+
 public sealed class AppSettings
 {
     public bool AlwaysOnTop { get; set; } = true;
     public Dictionary<string, DesktopSettings> Desktops { get; set; } = new();
+    public List<WorkplaceOption> Workplaces { get; set; } = new();
 
     private static readonly string Dir = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "WinLabeler");

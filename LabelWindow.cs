@@ -304,9 +304,12 @@ public sealed class LabelWindow : Window
         corners.Items.Add(Item("Top right", () => SetCorner(Corner.TopRight)));
         menu.Items.Add(corners);
 
+        var workplace = new MenuItem { Header = "Workplace" };
+        menu.Items.Add(workplace);
+
         menu.Items.Add(new Separator());
 
-        var onTop = new MenuItem { Header = "Always on top", IsCheckable = true };
+        var onTop =new MenuItem { Header = "Always on top", IsCheckable = true };
         onTop.Click += (_, _) => _manager.SetAlwaysOnTop(onTop.IsChecked);
         menu.Items.Add(onTop);
 
@@ -321,6 +324,15 @@ public sealed class LabelWindow : Window
         {
             onTop.IsChecked = _manager.Settings.AlwaysOnTop;
             startup.IsChecked = _manager.IsStartupEnabled;
+
+            workplace.Items.Clear();
+            workplace.Items.Add(Item("Manage", _manager.OpenWorkplaceManager));
+            if (_manager.Settings.Workplaces.Count > 0) workplace.Items.Add(new Separator());
+            foreach (var option in _manager.Settings.Workplaces)
+            {
+                var captured = option;
+                workplace.Items.Add(Item(captured.Label, () => _manager.RunWorkplace(captured)));
+            }
         };
 
         return menu;
