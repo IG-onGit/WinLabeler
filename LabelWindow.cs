@@ -276,9 +276,7 @@ public sealed class LabelWindow : Window
     {
         var menu = new ContextMenu();
 
-        menu.Items.Add(Item("Rename…", BeginEdit));
-
-        var colors = new MenuItem { Header = "Background color" };
+        var colors = new MenuItem { Header = "Color" };
         foreach (var (name, hex) in Palette)
         {
             var swatch = new Border
@@ -295,44 +293,35 @@ public sealed class LabelWindow : Window
         }
         colors.Items.Add(new Separator());
         colors.Items.Add(Item("Custom…", PickCustomColor));
-        menu.Items.Add(colors);
 
-        var corners = new MenuItem { Header = "Move to corner" };
-        corners.Items.Add(Item("Bottom left", () => SetCorner(Corner.BottomLeft)));
-        corners.Items.Add(Item("Bottom right", () => SetCorner(Corner.BottomRight)));
-        corners.Items.Add(Item("Top left", () => SetCorner(Corner.TopLeft)));
-        corners.Items.Add(Item("Top right", () => SetCorner(Corner.TopRight)));
-        menu.Items.Add(corners);
-
-        var workplace = new MenuItem { Header = "Workplace" };
-        menu.Items.Add(workplace);
-
-        menu.Items.Add(new Separator());
-
-        var onTop =new MenuItem { Header = "Always on top", IsCheckable = true };
+        var onTop = new MenuItem { Header = "Always on top", IsCheckable = true };
         onTop.Click += (_, _) => _manager.SetAlwaysOnTop(onTop.IsChecked);
-        menu.Items.Add(onTop);
 
         var startup = new MenuItem { Header = "Start with Windows", IsCheckable = true };
         startup.Click += (_, _) => _manager.SetStartup(startup.IsChecked);
-        menu.Items.Add(startup);
 
-        menu.Items.Add(new Separator());
-        menu.Items.Add(Item("Exit WinLabeler", _manager.Exit));
+        var settings = new MenuItem { Header = "Settings" };
+        settings.Items.Add(colors);
+        settings.Items.Add(onTop);
+        settings.Items.Add(startup);
+        settings.Items.Add(Item("Exit", _manager.Exit));
 
+        // Workplace options come from the user's setup, so the menu is rebuilt each time it opens.
         menu.Opened += (_, _) =>
         {
             onTop.IsChecked = _manager.Settings.AlwaysOnTop;
             startup.IsChecked = _manager.IsStartupEnabled;
 
-            workplace.Items.Clear();
-            workplace.Items.Add(Item("Manage", _manager.OpenWorkplaceManager));
-            if (_manager.Settings.Workplaces.Count > 0) workplace.Items.Add(new Separator());
+            menu.Items.Clear();
+            menu.Items.Add(Item("Manage", _manager.OpenWorkplaceManager));
+            if (_manager.Settings.Workplaces.Count > 0) menu.Items.Add(new Separator());
             foreach (var option in _manager.Settings.Workplaces)
             {
                 var captured = option;
-                workplace.Items.Add(Item(captured.Label, () => _manager.RunWorkplace(captured)));
+                menu.Items.Add(Item(captured.Label, () => _manager.RunWorkplace(captured)));
             }
+            menu.Items.Add(new Separator());
+            menu.Items.Add(settings);
         };
 
         return menu;
