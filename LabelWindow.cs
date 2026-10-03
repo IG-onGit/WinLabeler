@@ -179,9 +179,12 @@ public sealed class LabelWindow : Window
         if (w <= 0 || h <= 0) return;
 
         bool left = _s.Corner is Corner.BottomLeft or Corner.TopLeft;
-        bool top = _s.Corner is Corner.TopLeft or Corner.TopRight;
+        bool center = _s.Corner is Corner.BottomCenter or Corner.TopCenter;
+        bool top = _s.Corner is Corner.TopLeft or Corner.TopRight or Corner.TopCenter;
 
-        Left = left ? wa.Left + EdgeMargin : wa.Right - w - EdgeMargin;
+        Left = center ? wa.Left + (wa.Width - w) / 2
+             : left ? wa.Left + EdgeMargin
+             : wa.Right - w - EdgeMargin;
         Top = top ? wa.Top + EdgeMargin : wa.Bottom - h - EdgeMargin;
     }
 
@@ -197,14 +200,19 @@ public sealed class LabelWindow : Window
         var wa = SystemParameters.WorkArea;
         double cx = Left + ActualWidth / 2;
         double cy = Top + ActualHeight / 2;
-        bool right = cx > wa.Left + wa.Width / 2;
         bool bottom = cy > wa.Top + wa.Height / 2;
 
-        _s.Corner = (right, bottom) switch
+        // Screen split into thirds: left, middle (centered), right.
+        double third = wa.Width / 3;
+        int column = cx < wa.Left + third ? 0 : cx < wa.Left + 2 * third ? 1 : 2;
+
+        _s.Corner = (column, bottom) switch
         {
-            (false, true) => Corner.BottomLeft,
-            (true, true) => Corner.BottomRight,
-            (false, false) => Corner.TopLeft,
+            (0, true) => Corner.BottomLeft,
+            (2, true) => Corner.BottomRight,
+            (1, true) => Corner.BottomCenter,
+            (0, false) => Corner.TopLeft,
+            (1, false) => Corner.TopCenter,
             _ => Corner.TopRight,
         };
         _manager.Save();

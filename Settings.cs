@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace WinLabeler;
 
-public enum Corner { BottomLeft, BottomRight, TopLeft, TopRight }
+public enum Corner { BottomLeft, BottomRight, TopLeft, TopRight, BottomCenter, TopCenter }
 
 public sealed class DesktopSettings
 {
