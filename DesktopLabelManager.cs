@@ -167,6 +167,13 @@ public sealed class DesktopLabelManager : IDisposable
                 UseShellExecute = false,
                 CreateNoWindow = true,
             });
+
+            // Label the desktop being viewed with the workplace that was just launched.
+            var desktop = GetSettings(_shownId);
+            desktop.Label = option.Label;
+            desktop.Color = option.Color;
+            Save();
+            _window?.Bind(desktop, _shownIndex);
         }
         catch (Exception ex)
         {

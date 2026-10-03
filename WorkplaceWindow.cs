@@ -25,7 +25,10 @@ public sealed class WorkplaceWindow : Window
     private readonly Button _save;
     private readonly Button _delete;
     private readonly TextBlock _status;
+    private readonly WrapPanel _swatches = new() { Margin = new Thickness(0, 6, 0, 0) };
     private WorkplaceOption? _selected;   // null = creating a new option
+    private string _color = DefaultColor;
+    private const string DefaultColor = "#2D6CDF";
 
     public WorkplaceWindow(DesktopLabelManager manager)
     {
@@ -126,13 +129,20 @@ public sealed class WorkplaceWindow : Window
         _label.Margin = new Thickness(0, 6, 0, 0);
         _command.Margin = new Thickness(0, 6, 0, 0);
 
+        var colorCaption = Caption("LABEL COLOR");
+        colorCaption.Margin = new Thickness(0, 10, 0, 0);
+
         var right = new DockPanel { Margin = new Thickness(7, 12, 14, 14) };
         DockPanel.SetDock(labelCaption, Dock.Top);
         DockPanel.SetDock(_label, Dock.Top);
+        DockPanel.SetDock(colorCaption, Dock.Top);
+        DockPanel.SetDock(_swatches, Dock.Top);
         DockPanel.SetDock(cmdCaption, Dock.Top);
         DockPanel.SetDock(actions, Dock.Bottom);
         right.Children.Add(labelCaption);
         right.Children.Add(_label);
+        right.Children.Add(colorCaption);
+        right.Children.Add(_swatches);
         right.Children.Add(cmdCaption);
         right.Children.Add(actions);
         right.Children.Add(_command);
@@ -167,6 +177,7 @@ public sealed class WorkplaceWindow : Window
         _selected = o;
         _label.Text = o.Label;
         _command.Text = o.Command;
+        SetColor(o.Color);
         _delete.IsEnabled = true;
         _status.Text = "";
     }
@@ -177,6 +188,7 @@ public sealed class WorkplaceWindow : Window
         _list.SelectedItem = null;
         _label.Text = "";
         _command.Text = "";
+        SetColor(DefaultColor);
         _delete.IsEnabled = false;
         _status.Text = "New option";
         _label.Focus();
@@ -198,6 +210,7 @@ public sealed class WorkplaceWindow : Window
         }
         _selected.Label = label;
         _selected.Command = _command.Text;
+        _selected.Color = _color;
         _manager.Save();
 
         Reload();
@@ -213,6 +226,62 @@ public sealed class WorkplaceWindow : Window
         Reload();
         NewOption();
         _status.Text = "Deleted.";
+    }
+
+    // ---------- Color ----------
+
+    private void SetColor(string hex)
+    {
+        _color = hex;
+        _swatches.Children.Clear();
+
+        bool custom = true;
+        foreach (var (name, value) in LabelWindow.Palette)
+        {
+            bool active = string.Equals(value, hex, StringComparison.OrdinalIgnoreCase);
+            custom &= !active;
+            string captured = value;
+            _swatches.Children.Add(Swatch(value, name, active, () => SetColor(captured)));
+        }
+
+        // Last swatch: shows the custom color when one is set, otherwise a "+" to pick one.
+        var picker = Swatch(custom ? hex : "#2A3040", "Custom…", custom, PickCustomColor);
+        if (!custom) ((Border)picker).Child = new TextBlock
+        {
+            Text = "+", Foreground = Muted, HorizontalAlignment = HorizontalAlignment.Center,
+            VerticalAlignment = VerticalAlignment.Center, FontSize = 14,
+        };
+        _swatches.Children.Add(picker);
+    }
+
+    private static UIElement Swatch(string hex, string tip, bool active, Action onClick)
+    {
+        var b = new Border
+        {
+            Width = 22,
+            Height = 22,
+            CornerRadius = new CornerRadius(11),
+            Margin = new Thickness(0, 0, 8, 0),
+            Background = MakeBrush(hex),
+            BorderBrush = active ? Brushes.White : Brushes.Transparent,
+            BorderThickness = new Thickness(2),
+            Cursor = Cursors.Hand,
+            ToolTip = tip,
+        };
+        b.MouseLeftButtonUp += (_, _) => onClick();
+        return b;
+    }
+
+    private void PickCustomColor()
+    {
+        var c = (Color)ColorConverter.ConvertFromString(_color);
+        using var dlg = new System.Windows.Forms.ColorDialog
+        {
+            FullOpen = true,
+            Color = System.Drawing.Color.FromArgb(c.R, c.G, c.B),
+        };
+        if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            SetColor($"#{dlg.Color.R:X2}{dlg.Color.G:X2}{dlg.Color.B:X2}");
     }
 
     // ---------- UI helpers ----------

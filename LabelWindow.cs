@@ -19,7 +19,7 @@ public sealed class LabelWindow : Window
     [DllImport("user32.dll")] private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
     [DllImport("user32.dll")] private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
-    private static readonly (string Name, string Hex)[] Palette =
+    internal static readonly (string Name, string Hex)[] Palette =
     {
         ("Blue", "#2D6CDF"), ("Green", "#2E9E5B"), ("Red", "#D64545"), ("Orange", "#E8892B"),
         ("Yellow", "#F2C94C"), ("Purple", "#8A5CF5"), ("Teal", "#1FA2A6"), ("Pink", "#D6579B"),

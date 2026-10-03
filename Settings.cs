@@ -19,6 +19,7 @@ public sealed class WorkplaceOption
 {
     public string Label { get; set; } = "";
     public string Command { get; set; } = "";     // run through cmd.exe
+    public string Color { get; set; } = "#2D6CDF"; // label background while this workplace is active
 }
 
 public sealed class AppSettings
