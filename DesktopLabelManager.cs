@@ -55,6 +55,7 @@ public sealed class DesktopLabelManager : IDisposable
             else
             {
                 s = new DesktopSettings();
+                if (!Settings.RememberLabels) s.Corner = Corner.BottomCenter;
             }
             Settings.Desktops[key] = s;
             Save();
@@ -114,6 +115,13 @@ public sealed class DesktopLabelManager : IDisposable
         Settings.AlwaysOnTop = value;
         if (_window != null) _window.Topmost = value;
         Save();
+    }
+
+    public void SetRememberLabels(bool value)
+    {
+        Settings.RememberLabels = value;
+        Save();
+        _window?.Bind(GetSettings(_shownId), _shownIndex);   // refresh the default text format
     }
 
     public bool IsStartupEnabled

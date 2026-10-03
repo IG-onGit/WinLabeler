@@ -25,6 +25,7 @@ public sealed class WorkplaceOption
 public sealed class AppSettings
 {
     public bool AlwaysOnTop { get; set; } = true;
+    public bool RememberLabels { get; set; } = true;   // off: desktops start as plain numbers, bottom center
     public Dictionary<string, DesktopSettings> Desktops { get; set; } = new();
     public List<WorkplaceOption> Workplaces { get; set; } = new();
 
@@ -42,7 +43,11 @@ public sealed class AppSettings
         try
         {
             if (File.Exists(FilePath))
-                return JsonSerializer.Deserialize<AppSettings>(File.ReadAllText(FilePath), Options) ?? new AppSettings();
+            {
+                var loaded = JsonSerializer.Deserialize<AppSettings>(File.ReadAllText(FilePath), Options) ?? new AppSettings();
+                if (!loaded.RememberLabels) loaded.Desktops.Clear();
+                return loaded;
+            }
         }
         catch { /* corrupt file -> start fresh */ }
         return new AppSettings();
@@ -53,7 +58,17 @@ public sealed class AppSettings
         try
         {
             Directory.CreateDirectory(Dir);
-            File.WriteAllText(FilePath, JsonSerializer.Serialize(this, Options));
+            {
+                // With "Remember labels" off, per-desktop labels are kept in memory only.
+                var toSave = new AppSettings
+                {
+                    AlwaysOnTop = AlwaysOnTop,
+                    RememberLabels = RememberLabels,
+                    Workplaces = Workplaces,
+                    Desktops = RememberLabels ? Desktops : new(),
+                };
+                File.WriteAllText(FilePath, JsonSerializer.Serialize(toSave, Options));
+            }
         }
         catch { /* ignore disk errors */ }
     }

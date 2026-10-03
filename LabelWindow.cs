@@ -126,7 +126,8 @@ public sealed class LabelWindow : Window
     }
 
     private string DisplayLabel =>
-        string.IsNullOrWhiteSpace(_s.Label) ? $"Desktop {_index}" : _s.Label;
+        !string.IsNullOrWhiteSpace(_s.Label) ? _s.Label
+        : _manager.Settings.RememberLabels ? $"Desktop {_index}" : $"{_index}";
 
     private void RefreshText() => _text.Text = DisplayLabel;
 
@@ -305,12 +306,16 @@ public sealed class LabelWindow : Window
         var onTop = new MenuItem { Header = "Always on top", IsCheckable = true };
         onTop.Click += (_, _) => _manager.SetAlwaysOnTop(onTop.IsChecked);
 
+        var remember = new MenuItem { Header = "Remember labels", IsCheckable = true };
+        remember.Click += (_, _) => _manager.SetRememberLabels(remember.IsChecked);
+
         var startup = new MenuItem { Header = "Start with Windows", IsCheckable = true };
         startup.Click += (_, _) => _manager.SetStartup(startup.IsChecked);
 
         var settings = new MenuItem { Header = "Settings" };
         settings.Items.Add(colors);
         settings.Items.Add(onTop);
+        settings.Items.Add(remember);
         settings.Items.Add(startup);
         settings.Items.Add(Item("Exit", _manager.Exit));
 
@@ -319,6 +324,7 @@ public sealed class LabelWindow : Window
         {
             onTop.IsChecked = _manager.Settings.AlwaysOnTop;
             startup.IsChecked = _manager.IsStartupEnabled;
+            remember.IsChecked = _manager.Settings.RememberLabels;
 
             menu.Items.Clear();
             menu.Items.Add(Item("Manage", _manager.OpenWorkplaceManager));
