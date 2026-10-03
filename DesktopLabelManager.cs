@@ -158,8 +158,7 @@ public sealed class DesktopLabelManager : IDisposable
         {
             // A temp batch file lets multi-line commands work as written.
             string file = System.IO.Path.Combine(System.IO.Path.GetTempPath(), $"winlabeler-{Guid.NewGuid():N}.cmd");
-            System.IO.File.WriteAllText(file, "@echo off\r\n" + option.Command.Replace("\r\n", "\n").Replace("\n", "\r\n")
-                + "\r\ndel \"%~f0\" >nul 2>nul\r\n");
+            System.IO.File.WriteAllText(file, BuildBatch(option.Command));
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
             {
                 FileName = "cmd.exe",
@@ -179,6 +178,26 @@ public sealed class DesktopLabelManager : IDisposable
         {
             MessageBox.Show(ex.Message, $"Workplace: {option.Label}", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
+    }
+
+    private static readonly string[] NoCallPrefixes = { ":", "@", "rem ", "if ", "for ", "goto ", "(", ")" };
+
+    /// <summary>
+    /// One line per command. Tools like `code` are .cmd files, which end a batch script
+    /// unless started with `call`, so each plain command line gets that prefix.
+    /// </summary>
+    private static string BuildBatch(string commands)
+    {
+        var sb = new System.Text.StringBuilder("@echo off\r\n");
+        foreach (var raw in commands.Replace("\r\n", "\n").Split('\n'))
+        {
+            string line = raw.Trim();
+            if (line.Length == 0) continue;
+            bool plain = !NoCallPrefixes.Any(p => line.StartsWith(p, StringComparison.OrdinalIgnoreCase));
+            sb.Append(plain ? "call " : "").Append(line).Append("\r\n");
+        }
+        sb.Append("del \"%~f0\" >nul 2>nul\r\n");
+        return sb.ToString();
     }
 
     public void Exit()
