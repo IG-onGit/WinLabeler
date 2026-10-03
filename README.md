@@ -73,7 +73,7 @@ again after moving it).
   `net10.0-windows` in `WinLabeler.csproj` to match it (e.g. `net8.0-windows`).
 - **I don't see the label** - check the corner above the taskbar and the tray icon.
   With "Always on top" off, windows can cover the label.
-- **A label shows "Desktop N" after renaming** - you saved an empty name, which means "use the default".
+- **A label shows just its number after renaming** - you saved an empty name, which means "use the default".
 
 ## License
 

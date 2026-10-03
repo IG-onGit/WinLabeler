@@ -55,7 +55,6 @@ public sealed class DesktopLabelManager : IDisposable
             else
             {
                 s = new DesktopSettings();
-                if (!Settings.RememberLabels) s.Corner = Corner.BottomCenter;
             }
             Settings.Desktops[key] = s;
             Save();

@@ -10,9 +10,9 @@ public enum Corner { BottomLeft, BottomRight, TopLeft, TopRight, BottomCenter, T
 
 public sealed class DesktopSettings
 {
-    public string Label { get; set; } = "";          // empty = "Desktop N"
+    public string Label { get; set; } = "";          // empty = "N"
     public string Color { get; set; } = "#2D6CDF";
-    public Corner Corner { get; set; } = Corner.BottomLeft;
+    public Corner Corner { get; set; } = Corner.BottomCenter;
 }
 
 public sealed class WorkplaceOption

@@ -62,7 +62,6 @@ public sealed class LabelWindow : Window
         _edit = new TextBox
         {
             Visibility = Visibility.Collapsed,
-            MinWidth = 140,
             MaxLength = 40,
             FontSize = 15,
             FontWeight = FontWeights.SemiBold,
@@ -126,10 +125,17 @@ public sealed class LabelWindow : Window
     }
 
     private string DisplayLabel =>
-        !string.IsNullOrWhiteSpace(_s.Label) ? _s.Label
-        : _manager.Settings.RememberLabels ? $"Desktop {_index}" : $"{_index}";
+        string.IsNullOrWhiteSpace(_s.Label) ? $"{_index}" : _s.Label;
 
-    private void RefreshText() => _text.Text = DisplayLabel;
+    private void RefreshText()
+    {
+        _text.Text = DisplayLabel;
+
+        // Re-fit the window to the new text (it can otherwise keep a stale, wider size).
+        SizeToContent = SizeToContent.Manual;
+        SizeToContent = SizeToContent.WidthAndHeight;
+        InvalidateMeasure();
+    }
 
     // ---------- Appearance ----------
 
@@ -243,6 +249,7 @@ public sealed class LabelWindow : Window
     {
         if (_editing) return;
         _editing = true;
+        _edit.MinWidth = 140;   // room to type; must not widen the label while idle
         _edit.Text = _s.Label.Length > 0 ? _s.Label : DisplayLabel;
         _text.Visibility = Visibility.Collapsed;
         _edit.Visibility = Visibility.Visible;
@@ -263,11 +270,12 @@ public sealed class LabelWindow : Window
 
         if (commit)
         {
-            _s.Label = _edit.Text.Trim();   // empty -> falls back to "Desktop N"
+            _s.Label = _edit.Text.Trim();   // empty -> falls back to "N"
             _manager.Save();
         }
 
         _edit.Visibility = Visibility.Collapsed;
+        _edit.MinWidth = 0;
         _text.Visibility = Visibility.Visible;
         RefreshText();
     }
