@@ -21,7 +21,7 @@ public sealed class LabelWindow : Window
 
     internal static readonly (string Name, string Hex)[] Palette =
     {
-        ("Blue", "#2D6CDF"), ("Green", "#2E9E5B"), ("Red", "#D64545"), ("Orange", "#E8892B"),
+        ("Dark gray", "#3C3C3C"), ("Blue", "#2D6CDF"), ("Green", "#2E9E5B"), ("Red", "#D64545"), ("Orange", "#E8892B"),
         ("Yellow", "#F2C94C"), ("Purple", "#8A5CF5"), ("Teal", "#1FA2A6"), ("Pink", "#D6579B"),
         ("Slate", "#475569"), ("Black", "#1F1F1F"),
     };
