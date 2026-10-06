@@ -301,7 +301,7 @@ public sealed class WorkplaceWindow : Window
         Foreground = Muted,
     };
 
-    private static Button ActionButton(string text, Brush bg, Action onClick)
+    internal static Button ActionButton(string text, Brush bg, Action onClick, double radius = 0)
     {
         var b = new Button
         {
@@ -312,19 +312,22 @@ public sealed class WorkplaceWindow : Window
             Padding = new Thickness(16, 7, 16, 7),
             Margin = new Thickness(0, 0, 8, 0),
             Cursor = Cursors.Hand,
-            Template = ActionButtonTemplate(),
+            Template = ActionButtonTemplate(radius),
         };
         b.Click += (_, _) => onClick();
         return b;
     }
 
     /// <summary>Flat button: slight dim on hover, dark blue when disabled.</summary>
-    private static ControlTemplate ActionButtonTemplate()
+    private static ControlTemplate ActionButtonTemplate(double radius)
     {
         var template = new ControlTemplate(typeof(Button));
         var border = new FrameworkElementFactory(typeof(Border), "bd");
         border.SetValue(Border.BackgroundProperty, new TemplateBindingExtension(BackgroundProperty));
         border.SetValue(Border.PaddingProperty, new TemplateBindingExtension(PaddingProperty));
+        border.SetValue(Border.BorderBrushProperty, new TemplateBindingExtension(BorderBrushProperty));
+        border.SetValue(Border.BorderThicknessProperty, new TemplateBindingExtension(BorderThicknessProperty));
+        border.SetValue(Border.CornerRadiusProperty, new CornerRadius(radius));
         var presenter = new FrameworkElementFactory(typeof(ContentPresenter));
         presenter.SetValue(HorizontalAlignmentProperty, HorizontalAlignment.Center);
         presenter.SetValue(VerticalAlignmentProperty, VerticalAlignment.Center);

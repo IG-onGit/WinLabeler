@@ -157,6 +157,24 @@ public sealed class DesktopLabelManager : IDisposable
         _workplaceWindow.Activate();
     }
 
+    private WorkplaceMenuWindow? _menu;
+    private DateTime _menuClosedAt;
+
+    /// <summary>Single click on the label: shows the workplace list in the middle of the screen.</summary>
+    public void ShowWorkplaceMenu()
+    {
+        if (_menu != null) { _menu.Close(); return; }
+        // Clicking the label to dismiss the list also deactivates it; don't reopen it right away.
+        if ((DateTime.UtcNow - _menuClosedAt).TotalMilliseconds < 250) return;
+
+        _menu = new WorkplaceMenuWindow(this);
+        _menu.Closed += (_, _) => { _menu = null; _menuClosedAt = DateTime.UtcNow; };
+        _menu.Show();
+        _menu.Activate();
+    }
+
+    public void CloseWorkplaceMenu() => _menu?.Close();
+
     /// <summary>Runs the option's commands through cmd.exe (hidden console window).</summary>
     public void RunWorkplace(WorkplaceOption option)
     {
@@ -252,6 +270,8 @@ public sealed class DesktopLabelManager : IDisposable
         _timer.Stop();
         SystemEvents.DisplaySettingsChanged -= OnDisplayChanged;
 
+        _menu?.Close();
+        _workplaceWindow?.Close();
         _window?.Close();
         _window = null;
 

@@ -31,6 +31,7 @@ public sealed class LabelWindow : Window
     private readonly Border _border;
     private readonly TextBlock _text;
     private readonly TextBox _edit;
+    private readonly DispatcherTimer _clickTimer = new();
     private bool _editing;
     private bool _dragging;
     private int _index = 1;
@@ -77,6 +78,7 @@ public sealed class LabelWindow : Window
         _border = new Border
         {
             CornerRadius = new CornerRadius(12),
+            BorderThickness = new Thickness(1),
             Padding = new Thickness(16, 8, 16, 8),
             Child = grid,
             Cursor = Cursors.SizeAll,
@@ -85,6 +87,13 @@ public sealed class LabelWindow : Window
 
         _border.ContextMenu = BuildMenu();
         _border.MouseLeftButtonDown += OnMouseDown;
+        _border.MouseMove += OnMouseMove;
+        _border.MouseLeftButtonUp += OnMouseUp;
+        _clickTimer.Tick += (_, _) =>
+        {
+            _clickTimer.Stop();
+            if (!_editing) _manager.ShowWorkplaceMenu();
+        };
 
         _edit.KeyDown += (_, e) =>
         {
@@ -153,6 +162,10 @@ public sealed class LabelWindow : Window
         double luminance = (0.299 * c.R + 0.587 * c.G + 0.114 * c.B) / 255.0;
         Brush fg = luminance > 0.6 ? Brushes.Black : Brushes.White;
         _text.Foreground = fg;
+
+        // Thin outline in the text color, softened so it reads as an edge, not a frame.
+        var edge = luminance > 0.6 ? Colors.Black : Colors.White;
+        _border.BorderBrush = new SolidColorBrush(Color.FromArgb(90, edge.R, edge.G, edge.B));
         _edit.Foreground = fg;
         _edit.CaretBrush = fg;
     }
@@ -228,21 +241,78 @@ public sealed class LabelWindow : Window
 
     // ---------- Interaction ----------
 
+    // Dragging is done by hand (mouse capture) rather than DragMove: DragMove misbehaves with
+    // touchpad taps, and WPF's own ClickCount is unreliable after it, so clicks are timed here.
+
+    private bool _pressed;
+    private bool _moved;
+    private Point _pressMouse;      // screen position (DIPs) where the button went down
+    private Point _pressWindow;     // window position when the button went down
+    private long _lastClickTick;
+
+    private Point MouseOnScreen(MouseEventArgs e)
+    {
+        var px = PointToScreen(e.GetPosition(this));
+        var t = PresentationSource.FromVisual(this)?.CompositionTarget?.TransformFromDevice;
+        return t is Matrix m ? m.Transform(px) : px;
+    }
+
     private void OnMouseDown(object sender, MouseButtonEventArgs e)
     {
         if (_editing) return;
 
-        if (e.ClickCount == 2)
+        _pressed = true;
+        _moved = false;
+        _pressMouse = MouseOnScreen(e);
+        _pressWindow = new Point(Left, Top);
+        _border.CaptureMouse();
+        e.Handled = true;
+    }
+
+    private void OnMouseMove(object sender, MouseEventArgs e)
+    {
+        if (!_pressed) return;
+
+        var now = MouseOnScreen(e);
+        double dx = now.X - _pressMouse.X, dy = now.Y - _pressMouse.Y;
+        if (!_moved && Math.Abs(dx) < 4 && Math.Abs(dy) < 4) return;
+
+        _moved = true;
+        _dragging = true;
+        Left = _pressWindow.X + dx;
+        Top = _pressWindow.Y + dy;
+    }
+
+    private void OnMouseUp(object sender, MouseButtonEventArgs e)
+    {
+        if (!_pressed) return;
+        _pressed = false;
+        _border.ReleaseMouseCapture();
+
+        if (_moved)
         {
-            BeginEdit();
-            e.Handled = true;
+            _dragging = false;
+            _lastClickTick = 0;
+            SnapToNearestCorner();
             return;
         }
 
-        _dragging = true;
-        try { DragMove(); } catch (InvalidOperationException) { }
-        _dragging = false;
-        SnapToNearestCorner();
+        // A click. Two within the system double-click time (mouse double-click or touchpad
+        // double-tap) rename the label; a single one opens the workplace list after that interval.
+        int interval = System.Windows.Forms.SystemInformation.DoubleClickTime;
+        long now2 = Environment.TickCount64;
+        if (_lastClickTick != 0 && now2 - _lastClickTick <= interval)
+        {
+            _lastClickTick = 0;
+            _clickTimer.Stop();
+            BeginEdit();
+        }
+        else
+        {
+            _lastClickTick = now2;
+            _clickTimer.Interval = TimeSpan.FromMilliseconds(interval);
+            _clickTimer.Start();
+        }
     }
 
     private void BeginEdit()
@@ -320,30 +390,19 @@ public sealed class LabelWindow : Window
         var startup = new MenuItem { Header = "Start with Windows", IsCheckable = true };
         startup.Click += (_, _) => _manager.SetStartup(startup.IsChecked);
 
-        var settings = new MenuItem { Header = "Settings" };
-        settings.Items.Add(colors);
-        settings.Items.Add(onTop);
-        settings.Items.Add(remember);
-        settings.Items.Add(startup);
-        settings.Items.Add(Item("Exit", _manager.Exit));
+        menu.Items.Add(Item("Rename", BeginEdit));
+        menu.Items.Add(colors);
+        menu.Items.Add(onTop);
+        menu.Items.Add(remember);
+        menu.Items.Add(startup);
+        menu.Items.Add(new Separator());
+        menu.Items.Add(Item("Exit", _manager.Exit));
 
-        // Workplace options come from the user's setup, so the menu is rebuilt each time it opens.
         menu.Opened += (_, _) =>
         {
             onTop.IsChecked = _manager.Settings.AlwaysOnTop;
             startup.IsChecked = _manager.IsStartupEnabled;
             remember.IsChecked = _manager.Settings.RememberLabels;
-
-            menu.Items.Clear();
-            menu.Items.Add(Item("Manage", _manager.OpenWorkplaceManager));
-            if (_manager.Settings.Workplaces.Count > 0) menu.Items.Add(new Separator());
-            foreach (var option in _manager.Settings.Workplaces)
-            {
-                var captured = option;
-                menu.Items.Add(Item(captured.Label, () => _manager.RunWorkplace(captured)));
-            }
-            menu.Items.Add(new Separator());
-            menu.Items.Add(settings);
         };
 
         return menu;
