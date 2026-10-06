@@ -81,7 +81,7 @@ public sealed class LabelWindow : Window
             BorderThickness = new Thickness(1),
             Padding = new Thickness(16, 8, 16, 8),
             Child = grid,
-            Cursor = Cursors.SizeAll,
+            Cursor = Cursors.Hand,
         };
         Content = _border;
 
