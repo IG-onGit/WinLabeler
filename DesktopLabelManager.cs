@@ -67,27 +67,25 @@ public sealed class DesktopLabelManager : IDisposable
         var ids = VirtualDesktops.GetDesktopIds();
         Guid? current = VirtualDesktops.GetCurrentDesktopId();
 
-        Guid id;
-        int index;
-        if (ids == null || ids.Count <= 1)
-        {
-            id = ids is { Count: 1 } ? ids[0] : Guid.Empty;   // only one desktop exists
-            index = 1;
-        }
-        else if (current is Guid c && ids.Contains(c))
-        {
-            id = c;
-            index = ids.IndexOf(c) + 1;
-        }
-        else
-        {
+        if (!TryResolve(ids, current, out Guid id, out int index))
             return;   // current desktop momentarily unreadable: keep what is shown
-        }
 
         if (_window == null)
         {
             _window = new LabelWindow(this, GetSettings(id));
             _window.Show();
+        }
+
+        // The registry's "current desktop" can be stale (e.g. right after logon it may still name
+        // the desktop from the previous session). If Windows says our window is on the desktop
+        // being viewed, that window's own desktop is the truth.
+        if (ids is { Count: > 1 }
+            && VirtualDesktops.IsOnCurrentDesktop(_window.Handle) == true
+            && VirtualDesktops.GetWindowDesktop(_window.Handle) is Guid own
+            && ids.Contains(own))
+        {
+            id = own;
+            index = ids.IndexOf(own) + 1;
         }
 
         if (id != _shownId || index != _shownIndex)
@@ -100,6 +98,25 @@ public sealed class DesktopLabelManager : IDisposable
         // Keep the single label on the desktop being viewed.
         if (id != Guid.Empty)
             VirtualDesktops.EnsureOnDesktop(_window.Handle, id);
+    }
+
+    private static bool TryResolve(List<Guid>? ids, Guid? current, out Guid id, out int index)
+    {
+        if (ids == null || ids.Count <= 1)
+        {
+            id = ids is { Count: 1 } ? ids[0] : Guid.Empty;   // only one desktop exists
+            index = 1;
+            return true;
+        }
+        if (current is Guid c && ids.Contains(c))
+        {
+            id = c;
+            index = ids.IndexOf(c) + 1;
+            return true;
+        }
+        id = Guid.Empty;
+        index = 0;
+        return false;
     }
 
     private void OnDisplayChanged(object? sender, EventArgs e)

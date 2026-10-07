@@ -90,6 +90,18 @@ internal static class VirtualDesktops
         return null;
     }
 
+    /// <summary>True/false if Windows says whether the window is on the desktop being viewed; null if unknown.</summary>
+    public static bool? IsOnCurrentDesktop(IntPtr hwnd)
+    {
+        try
+        {
+            if (Manager != null && Manager.IsWindowOnCurrentVirtualDesktop(hwnd, out bool on) == 0)
+                return on;
+        }
+        catch { }
+        return null;
+    }
+
     public static bool MoveToDesktop(IntPtr hwnd, Guid desktopId)
     {
         try { return Manager != null && Manager.MoveWindowToDesktop(hwnd, desktopId) == 0; }
