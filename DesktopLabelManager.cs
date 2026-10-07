@@ -62,10 +62,34 @@ public sealed class DesktopLabelManager : IDisposable
         return s;
     }
 
+    private readonly DateTime _started = DateTime.Now;
+    private bool _loggedFirst;
+
+    /// <summary>Small diagnostic log (first minute after start only), in the settings folder.</summary>
+    private void Log(string message)
+    {
+        if ((DateTime.Now - _started).TotalSeconds > 60) return;
+        try
+        {
+            string dir = System.IO.Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "WinLabeler");
+            System.IO.Directory.CreateDirectory(dir);
+            System.IO.File.AppendAllText(System.IO.Path.Combine(dir, "startup.log"),
+                $"{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff} {message}{Environment.NewLine}");
+        }
+        catch { }
+    }
+
     private void Sync()
     {
         var ids = VirtualDesktops.GetDesktopIds();
         Guid? current = VirtualDesktops.GetCurrentDesktopId();
+
+        if (!_loggedFirst)
+        {
+            _loggedFirst = true;
+            Log($"first sync: desktops={ids?.Count.ToString() ?? "?"} registryCurrent={current?.ToString() ?? "?"}");
+        }
 
         if (!TryResolve(ids, current, out Guid id, out int index))
             return;   // current desktop momentarily unreadable: keep what is shown
@@ -76,16 +100,15 @@ public sealed class DesktopLabelManager : IDisposable
             _window.Show();
         }
 
-        // The registry's "current desktop" can be stale (e.g. right after logon it may still name
-        // the desktop from the previous session). If Windows says our window is on the desktop
-        // being viewed, that window's own desktop is the truth.
+        // The registry's "current desktop" can be stale (right after logon it may still name the
+        // desktop from the previous session), so prefer what Windows says about other windows.
         if (ids is { Count: > 1 }
-            && VirtualDesktops.IsOnCurrentDesktop(_window.Handle) == true
-            && VirtualDesktops.GetWindowDesktop(_window.Handle) is Guid own
-            && ids.Contains(own))
+            && VirtualDesktops.GetCurrentDesktopIdFromWindows(_window.Handle) is Guid actual
+            && ids.Contains(actual))
         {
-            id = own;
-            index = ids.IndexOf(own) + 1;
+            if (actual != id) Log($"registry said {id}, windows say {actual}");
+            id = actual;
+            index = ids.IndexOf(actual) + 1;
         }
 
         if (id != _shownId || index != _shownIndex)

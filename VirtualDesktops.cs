@@ -102,6 +102,46 @@ internal static class VirtualDesktops
         return null;
     }
 
+    [DllImport("user32.dll")] private static extern bool EnumWindows(EnumProc proc, IntPtr lParam);
+    [DllImport("user32.dll")] private static extern bool IsWindowVisible(IntPtr hWnd);
+    [DllImport("user32.dll")] private static extern bool IsIconic(IntPtr hWnd);
+    [DllImport("user32.dll")] private static extern IntPtr GetForegroundWindow();
+    private delegate bool EnumProc(IntPtr hWnd, IntPtr lParam);
+
+    private static Guid? DesktopIfCurrent(IntPtr hwnd)
+    {
+        if (Manager == null) return null;
+        try
+        {
+            if (Manager.IsWindowOnCurrentVirtualDesktop(hwnd, out bool on) == 0 && on
+                && Manager.GetWindowDesktopId(hwnd, out var id) == 0 && id != Guid.Empty)
+                return id;
+        }
+        catch { }
+        return null;
+    }
+
+    /// <summary>
+    /// The desktop being viewed, taken from another program's window that Windows says is on it.
+    /// The registry value can be stale (right after logon it names the previous session's desktop),
+    /// and our own tool window is never assigned a desktop, so neither can be trusted at startup.
+    /// Returns null when no ordinary window is on the current desktop.
+    /// </summary>
+    public static Guid? GetCurrentDesktopIdFromWindows(IntPtr exclude)
+    {
+        var fg = GetForegroundWindow();
+        if (fg != IntPtr.Zero && fg != exclude && DesktopIfCurrent(fg) is Guid f) return f;
+
+        Guid? found = null;
+        EnumWindows((h, _) =>
+        {
+            if (h == exclude || !IsWindowVisible(h) || IsIconic(h)) return true;
+            if (DesktopIfCurrent(h) is Guid d) { found = d; return false; }
+            return true;
+        }, IntPtr.Zero);
+        return found;
+    }
+
     public static bool MoveToDesktop(IntPtr hwnd, Guid desktopId)
     {
         try { return Manager != null && Manager.MoveWindowToDesktop(hwnd, desktopId) == 0; }
