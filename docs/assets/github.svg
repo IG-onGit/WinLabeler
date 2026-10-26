@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0A0E16"/><stop offset="1" stop-color="#14264F"/></linearGradient>
+    <radialGradient id="glow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#3C7BFF" stop-opacity=".45"/><stop offset="1" stop-color="#3C7BFF" stop-opacity="0"/></radialGradient>
+    <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5B9BFF"/><stop offset="1" stop-color="#1F4DB8"/></linearGradient>
+    <filter id="sh" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#000" flood-opacity=".5"/></filter>
+  </defs>
+  <rect width="1280" height="640" fill="url(#bg)"/>
+  <circle cx="640" cy="230" r="300" fill="url(#glow)"/>
+  <g filter="url(#sh)" transform="translate(640 215) scale(2.1) translate(-54 -54)">
+    <circle cx="54" cy="54" r="54" fill="url(#lg)"/>
+    <rect x="26" y="24" width="56" height="34" rx="7" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="4"/>
+    <rect x="22" y="50" width="64" height="32" rx="16" fill="#fff"/>
+    <rect x="38" y="62" width="32" height="8" rx="4" fill="#2459C9"/>
+    <circle cx="82" cy="30" r="9" fill="#34D399" stroke="#1F4DB8" stroke-width="3"/>
+  </g>
+  <text x="640" y="418" text-anchor="middle" font-family="'Segoe UI','Inter',Arial,sans-serif" font-size="92" font-weight="600" fill="#fff">Win<tspan fill="#A9C7FF">Labeler</tspan></text>
+  <text x="640" y="486" text-anchor="middle" font-family="'Segoe UI','Inter',Arial,sans-serif" font-size="38" fill="#B4BED2">Always know <tspan fill="#34D399" font-weight="600">which desktop</tspan> you're on</text>
+  <rect x="926" y="40" width="314" height="52" rx="26" fill="#ffffff" fill-opacity=".08" stroke="#ffffff" stroke-opacity=".22"/>
+  <text x="1083" y="74" text-anchor="middle" font-family="'Segoe UI','Inter',Arial,sans-serif" font-size="23" fill="#E8ECF4">Windows · Virtual desktops</text>
+  <polygon points="0,150 150,0 262,0 0,262" fill="#2E7D32"/>
+  <text transform="translate(103 103) rotate(-45)" text-anchor="middle" font-family="'Segoe UI','Inter',Arial,sans-serif" font-size="40" font-weight="700" fill="#fff" dy="14" letter-spacing="2">MIT</text>
+</svg>

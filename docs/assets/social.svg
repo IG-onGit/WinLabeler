@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1031" height="874" viewBox="0 0 1031 874">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0A0E16"/><stop offset="1" stop-color="#14264F"/></linearGradient>
+    <radialGradient id="glow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#3C7BFF" stop-opacity=".4"/><stop offset="1" stop-color="#3C7BFF" stop-opacity="0"/></radialGradient>
+    <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5B9BFF"/><stop offset="1" stop-color="#1F4DB8"/></linearGradient>
+    <filter id="sh" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000" flood-opacity=".5"/></filter>
+    <marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#7DB4FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  </defs>
+  <rect width="1031" height="874" fill="url(#bg)"/>
+  <circle cx="515" cy="170" r="260" fill="url(#glow)"/>
+  <g filter="url(#sh)" transform="translate(515 150) scale(1.4) translate(-54 -54)">
+    <circle cx="54" cy="54" r="54" fill="url(#lg)"/>
+    <rect x="26" y="24" width="56" height="34" rx="7" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="4"/>
+    <rect x="22" y="50" width="64" height="32" rx="16" fill="#fff"/>
+    <rect x="38" y="62" width="32" height="8" rx="4" fill="#2459C9"/>
+    <circle cx="82" cy="30" r="9" fill="#34D399" stroke="#1F4DB8" stroke-width="3"/>
+  </g>
+  <text x="515" y="290" text-anchor="middle" font-family="'Segoe UI','Inter',Arial,sans-serif" font-size="68" font-weight="600" fill="#fff">Win<tspan fill="#A9C7FF">Labeler</tspan></text>
+  <text x="515" y="338" text-anchor="middle" font-family="'Segoe UI','Inter',Arial,sans-serif" font-size="28" fill="#B4BED2">Always know <tspan fill="#34D399" font-weight="600">which desktop</tspan> you're on</text>
+
+  <g font-family="'Segoe UI','Inter',Arial,sans-serif">
+    <g transform="translate(60 400)">
+      <rect width="260" height="190" rx="16" fill="#F4F7FC"/>
+      <rect x="14" y="14" width="232" height="26" rx="6" fill="#DDE5F2"/>
+      <rect x="14" y="52" width="150" height="60" rx="8" fill="#E7EDF7"/>
+      <rect x="170" y="52" width="76" height="60" rx="8" fill="#E7EDF7"/>
+      <rect x="82" y="138" width="96" height="34" rx="17" fill="#2D6CDF"/>
+      <text x="130" y="161" text-anchor="middle" font-size="18" font-weight="600" fill="#fff">Work</text>
+    </g>
+    <g transform="translate(386 400)">
+      <rect width="260" height="190" rx="16" fill="#F4F7FC"/>
+      <rect x="14" y="14" width="232" height="26" rx="6" fill="#DDE5F2"/>
+      <rect x="14" y="52" width="102" height="60" rx="8" fill="#E7EDF7"/>
+      <rect x="122" y="52" width="124" height="60" rx="8" fill="#E7EDF7"/>
+      <rect x="82" y="138" width="96" height="34" rx="17" fill="#2E9E5B"/>
+      <text x="130" y="161" text-anchor="middle" font-size="18" font-weight="600" fill="#fff">Email</text>
+    </g>
+    <g transform="translate(711 400)">
+      <rect width="260" height="190" rx="16" fill="#F4F7FC"/>
+      <rect x="14" y="14" width="232" height="26" rx="6" fill="#DDE5F2"/>
+      <rect x="14" y="52" width="232" height="60" rx="8" fill="#E7EDF7"/>
+      <rect x="82" y="138" width="96" height="34" rx="17" fill="#8A5CF5"/>
+      <text x="130" y="161" text-anchor="middle" font-size="18" font-weight="600" fill="#fff">Play</text>
+    </g>
+    <path d="M326 440 H376" stroke="#7DB4FF" stroke-width="2.5" fill="none" marker-end="url(#ah)"/>
+    <path d="M652 440 H701" stroke="#7DB4FF" stroke-width="2.5" fill="none" marker-end="url(#ah)"/>
+    <text x="515" y="636" text-anchor="middle" font-size="22" fill="#B4BED2">One label per virtual desktop: own name, color and corner</text>
+  </g>
+
+  <g font-family="Consolas,'Courier New',monospace" font-size="24">
+    <text x="60" y="730" fill="#34D399" font-weight="700">&gt;</text><text x="90" y="730" fill="#E8ECF4">click label → pick a workplace</text>
+    <text x="60" y="776" fill="#34D399" font-weight="700">&gt;</text><text x="90" y="776" fill="#E8ECF4">double-click → rename, drag → snap</text>
+  </g>
+  <polygon points="0,150 150,0 262,0 0,262" fill="#2E7D32"/>
+  <text transform="translate(103 103) rotate(-45)" text-anchor="middle" font-family="'Segoe UI','Inter',Arial,sans-serif" font-size="40" font-weight="700" fill="#fff" dy="14" letter-spacing="2">MIT</text>
+</svg>

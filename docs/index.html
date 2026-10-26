@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Windows Virtual Desktop Labels, On Screen | WinLabeler</title>
+<meta name="description" content="WinLabeler is a free, open-source Windows tray app that shows a colored label with a custom name on each virtual desktop, so you always know where you are.">
+<meta name="keywords" content="Windows virtual desktop label, virtual desktop name, rename virtual desktop, Windows 10 virtual desktops, Windows 11 virtual desktops, desktop label, tray app, WPF, .NET 10, open source, MIT license">
+<meta name="author" content="Irakli Gzirishvili">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0b0f17">
+<link rel="canonical" href="https://ig-ongit.github.io/WinLabeler/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="WinLabeler">
+<meta property="og:title" content="Windows Virtual Desktop Labels, On Screen | WinLabeler">
+<meta property="og:description" content="A free, open-source Windows tray app that shows a small colored label with a custom name on each virtual desktop.">
+<meta property="og:url" content="https://ig-ongit.github.io/WinLabeler/">
+<meta property="og:image" content="https://ig-ongit.github.io/WinLabeler/assets/github.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="WinLabeler logo and the slogan: Always know which desktop you're on">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Windows Virtual Desktop Labels, On Screen | WinLabeler">
+<meta name="twitter:description" content="A free, open-source Windows tray app that shows a small colored label with a custom name on each virtual desktop.">
+<meta name="twitter:image" content="https://ig-ongit.github.io/WinLabeler/assets/github.png">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "WinLabeler",
+      "operatingSystem": "Windows 10, Windows 11 (64-bit)",
+      "applicationCategory": "UtilitiesApplication",
+      "description": "A small Windows tray app that shows a rounded label with a custom name and color on each virtual desktop.",
+      "url": "https://ig-ongit.github.io/WinLabeler/",
+      "image": "https://ig-ongit.github.io/WinLabeler/assets/github.png",
+      "downloadUrl": "https://github.com/IG-onGit/WinLabeler/raw/main/WinLabeler.exe",
+      "license": "https://github.com/IG-onGit/WinLabeler/blob/main/LICENSE",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "author": { "@type": "Person", "name": "Irakli Gzirishvili", "url": "https://github.com/IG-onGit" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Is WinLabeler free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. WinLabeler is open source under the MIT license, so you can use, change and share it at no cost." } },
+        { "@type": "Question", "name": "Which versions of Windows does it support?", "acceptedAnswer": { "@type": "Answer", "text": "Windows 10 or 11, 64-bit. It was developed and tested on Windows 10 LTSC 1809. It finds the current desktop through undocumented registry values, which Microsoft may change between Windows versions." } },
+        { "@type": "Question", "name": "Do I need to install .NET?", "acceptedAnswer": { "@type": "Answer", "text": "The released exe needs the .NET 10 Desktop Runtime (x64). If you build from source you can switch to a self-contained build that runs without the runtime, at the cost of a much larger file." } },
+        { "@type": "Question", "name": "Does WinLabeler send any data anywhere?", "acceptedAnswer": { "@type": "Answer", "text": "No. The app contains no network code. Your labels and workplaces are stored in a settings.json file in your own %AppData%\\WinLabeler folder." } }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true" focusable="false">
+<symbol id="i-tag" viewBox="0 0 24 24"><path d="M12.6 2.6a2 2 0 0 0-1.4-.6H4a2 2 0 0 0-2 2v7.2a2 2 0 0 0 .6 1.4l8.7 8.7a2.4 2.4 0 0 0 3.4 0l6.6-6.6a2.4 2.4 0 0 0 0-3.4z"/><circle cx="7.5" cy="7.5" r="1"/></symbol>
+<symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></symbol>
+<symbol id="i-palette" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.9 0 1.6-.7 1.6-1.6 0-.4-.2-.8-.4-1.1-.3-.3-.5-.7-.5-1.1 0-.9.7-1.6 1.6-1.6H16c3.3 0 6-2.7 6-6 0-4.9-4.5-9-10-9z"/></symbol>
+<symbol id="i-move" viewBox="0 0 24 24"><path d="m5 9-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20"/></symbol>
+<symbol id="i-pencil" viewBox="0 0 24 24"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></symbol>
+<symbol id="i-terminal" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+<symbol id="i-power" viewBox="0 0 24 24"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></symbol>
+<symbol id="i-github" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></symbol>
+<symbol id="i-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol>
+<symbol id="i-arrow-left" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></symbol>
+<symbol id="i-scale" viewBox="0 0 24 24"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+<symbol id="i-cpu" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></symbol>
+<symbol id="i-folder" viewBox="0 0 24 24"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol>
+<symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></symbol>
+<symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4M12 17h.01"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></symbol>
+<symbol id="i-twitter-x" viewBox="0 0 24 24"><path d="M4 4l11.7 16H20L8.3 4z"/><path d="M4 20l6.8-6.8M13.2 10.8L20 4"/></symbol>
+<symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></symbol>
+</svg>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="./" aria-label="WinLabeler home"><img src="assets/logo.svg" alt="" width="34" height="34"><span>Win<span>Labeler</span></span></a>
+    <button class="burger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Open menu"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#workplaces">Workplaces</a>
+      <a href="#faq">FAQ</a>
+      <a href="docs/">Docs</a>
+      <a class="btn btn-ghost btn-sm" href="https://github.com/IG-onGit/WinLabeler" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <div class="container">
+      <div>
+        <div class="badges">
+          <span class="badge mit"><svg class="icon" aria-hidden="true"><use href="#i-scale"/></svg>MIT License</span>
+          <span class="badge"><span class="dot"></span>Windows 10 / 11 · x64</span>
+          <span class="badge">C# · WPF · .NET 10</span>
+        </div>
+        <h1>Always know <span class="grad">which virtual desktop</span> you're on</h1>
+        <p class="lead">WinLabeler is a tiny tray app that keeps a small rounded label on screen with the name of your current Windows desktop. Every desktop gets its own name, color and corner.</p>
+        <a class="author-pill" href="docs/#author">
+          <img src="assets/Irakli%20Gzirishvili.png" alt="Irakli Gzirishvili" width="48" height="48">
+          <span><small>Created by</small><strong>Irakli Gzirishvili</strong><em>Full-Stack Software Engineer · MIT OSS Provider</em></span>
+        </a>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://github.com/IG-onGit/WinLabeler/raw/main/WinLabeler.exe" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Download WinLabeler.exe</a>
+          <a class="btn btn-ghost" href="docs/"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg>Read the docs</a>
+        </div>
+        <ul class="trust">
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Free &amp; open source</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>No network access</li>
+        </ul>
+      </div>
+
+      <div class="hero-art" aria-hidden="true">
+        <div class="screen">
+          <div class="screen-bar"><i></i><i></i><i></i></div>
+          <div class="screen-body">
+            <div class="win w1"></div>
+            <div class="win w2"></div>
+            <div class="taskbar"></div>
+            <div class="chip">Work</div>
+          </div>
+        </div>
+        <div class="thumbs">
+          <div class="thumb t1 on"><b></b><span>Work</span></div>
+          <div class="thumb t2"><b></b><span>Email</span></div>
+          <div class="thumb t3"><b></b><span>Play</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block alt" id="features">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Features</span>
+        <h2>A label that knows where you are</h2>
+        <p class="section-intro">Windows numbers your desktops but never shows the number. WinLabeler puts a name on each one.</p>
+      </div>
+      <div class="grid-3">
+        <article class="card"><div class="icon-tile"><svg class="icon" aria-hidden="true"><use href="#i-layers"/></svg></div><h3>One label per desktop</h3><p>Each virtual desktop remembers its own name, color and screen position. Switch desktops and the label follows you.</p></article>
+        <article class="card"><div class="icon-tile"><svg class="icon" aria-hidden="true"><use href="#i-pencil"/></svg></div><h3>Rename in place</h3><p>Double-click the label, type a name, press Enter. Esc cancels. An empty name falls back to the desktop number.</p></article>
+        <article class="card"><div class="icon-tile"><svg class="icon" aria-hidden="true"><use href="#i-move"/></svg></div><h3>Drag and snap</h3><p>Drag the label anywhere and it snaps to the nearest of six spots: top or bottom, left, center or right.</p></article>
+        <article class="card"><div class="icon-tile"><svg class="icon" aria-hidden="true"><use href="#i-palette"/></svg></div><h3>Your colors</h3><p>Pick from 11 preset colors or open the color picker for any custom shade, separately for every desktop.</p></article>
+        <article class="card"><div class="icon-tile"><svg class="icon" aria-hidden="true"><use href="#i-terminal"/></svg></div><h3>Workplace launcher</h3><p>Click the label for a list of workplaces. Each one runs your own commands and labels the desktop to match.</p></article>
+        <article class="card"><div class="icon-tile"><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg></div><h3>Local and private</h3><p>Settings live in a JSON file in your AppData folder. The app has no network code and no account.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="how">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">How it works</span>
+        <h2>Three steps, no setup screen</h2>
+        <p class="section-intro">There is nothing to configure before it is useful.</p>
+      </div>
+      <ol class="steps">
+        <li class="card"><h3>Run the exe</h3><p>WinLabeler starts in the tray and shows one label, bottom center, with your desktop number on it.</p></li>
+        <li class="card"><h3>Switch desktops</h3><p>The app checks the active desktop several times a second and updates the label to that desktop's saved name and color.</p></li>
+        <li class="card"><h3>Make it yours</h3><p>Rename it, recolor it, drag it to a corner, or right-click for options like Always on top and Start with Windows.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block alt" id="workplaces">
+    <div class="container split">
+      <div>
+        <span class="eyebrow">Workplaces</span>
+        <h2>One click to set up a desktop</h2>
+        <p class="section-intro">Turn a desktop into a ready workspace. A workplace is a label, a color and a list of commands that run through <code class="inline">cmd.exe</code>.</p>
+        <ul class="checks">
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Open your editor, browser and tools with one click</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>The current desktop is labeled with the workplace you launched</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>One command per line, edited in a small built-in manager</li>
+        </ul>
+        <a class="btn btn-ghost" href="docs/#workplaces"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg>Workplaces guide</a>
+      </div>
+      <div class="stack">
+        <pre><code data-lang="bat" data-title="Workplace commands">code C:\Work\my-app
+start https://github.com
+rem each line is run on its own</code></pre>
+        <pre><code data-lang="json" data-title="%AppData%\WinLabeler\settings.json">{
+  "Workplaces": [
+    {
+      "Label": "Work",
+      "Command": "code C:\\Work\\my-app",
+      "Color": "#2D6CDF"
+    }
+  ]
+}</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="faq">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">FAQ</span>
+        <h2>Questions people ask first</h2>
+      </div>
+      <div class="faq">
+        <details open><summary>Is WinLabeler free?<svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></summary><p>Yes. WinLabeler is open source under the MIT license, so you can use, change and share it at no cost.</p></details>
+        <details><summary>Which versions of Windows does it support?<svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></summary><p>Windows 10 or 11, 64-bit. It was developed and tested on Windows 10 LTSC 1809. It finds the current desktop through undocumented registry values, which Microsoft may change between Windows versions.</p></details>
+        <details><summary>Do I need to install .NET?<svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></summary><p>The released exe needs the .NET 10 Desktop Runtime (x64). If you build from source you can switch to a self-contained build that runs without the runtime, at the cost of a much larger file.</p></details>
+        <details><summary>Does WinLabeler send any data anywhere?<svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></summary><p>No. The app contains no network code. Your labels and workplaces are stored in a settings.json file in your own %AppData%\WinLabeler folder.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0">
+    <div class="container">
+      <div class="cta-band">
+        <h2>Never lose track of a desktop again</h2>
+        <p>Download the exe, run it, and name your first desktop in a double-click.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="docs/#installation"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Get started</a>
+          <a class="btn btn-ghost" href="https://github.com/IG-onGit/WinLabeler" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>Star on GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Copyright (c) 2026 Irakli Gzirishvili · Released under the MIT License.</p>
+    <nav aria-label="Footer">
+      <a href="docs/">Documentation</a>
+      <a href="docs/#requirements">Requirements</a>
+      <a href="docs/#license">License</a>
+      <a href="https://github.com/IG-onGit/WinLabeler" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</footer>
+<script src="assets/main.js" defer></script>
+</body>
+</html>
