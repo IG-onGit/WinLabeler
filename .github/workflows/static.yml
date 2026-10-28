@@ -2,11 +2,9 @@
 name: Deploy static site to Pages
 
 on:
+  # Only runs when the head commit message contains "[deploy]" (see job condition).
   push:
     branches: [main]
-    paths:
-      - "docs/**"
-      - ".github/workflows/static.yml"
   # Manual run from the Actions tab ("Run workflow" button).
   workflow_dispatch:
 
@@ -22,6 +20,7 @@ concurrency:
 
 jobs:
   deploy:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[deploy]')
     runs-on: ubuntu-latest
     environment:
       name: github-pages
