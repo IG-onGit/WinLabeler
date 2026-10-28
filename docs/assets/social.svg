@@ -15,8 +15,8 @@
     <rect x="38" y="62" width="32" height="8" rx="4" fill="#2459C9"/>
     <circle cx="82" cy="30" r="9" fill="#34D399" stroke="#1F4DB8" stroke-width="3"/>
   </g>
-  <text x="515" y="290" text-anchor="middle" font-family="'Segoe UI','Inter',Arial,sans-serif" font-size="68" font-weight="600" fill="#fff">Win<tspan fill="#A9C7FF">Labeler</tspan></text>
-  <text x="515" y="338" text-anchor="middle" font-family="'Segoe UI','Inter',Arial,sans-serif" font-size="28" fill="#B4BED2">Always know <tspan fill="#34D399" font-weight="600">which desktop</tspan> you're on</text>
+  <text x="515" y="290" text-anchor="middle" font-family="'Segoe UI','Inter',Arial,sans-serif" font-size="68" font-weight="600" fill="#fff">Win<tspan fill="#A9C7FF">Space</tspan></text>
+  <text x="515" y="338" text-anchor="middle" font-family="'Segoe UI','Inter',Arial,sans-serif" font-size="28" fill="#B4BED2">Your workspace, <tspan fill="#34D399" font-weight="600">set up in one click</tspan></text>
 
   <g font-family="'Segoe UI','Inter',Arial,sans-serif">
     <g transform="translate(60 400)">

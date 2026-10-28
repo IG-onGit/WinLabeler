@@ -7,7 +7,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 
-namespace WinLabeler;
+namespace WinSpace;
 
 /// <summary>The small rounded label shown on one virtual desktop.</summary>
 public sealed class LabelWindow : Window

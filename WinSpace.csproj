@@ -7,8 +7,10 @@
     <UseWindowsForms>true</UseWindowsForms>
     <Nullable>enable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
-    <AssemblyName>WinLabeler</AssemblyName>
-    <RootNamespace>WinLabeler</RootNamespace>
+    <AssemblyName>WinSpace</AssemblyName>
+    <RootNamespace>WinSpace</RootNamespace>
+    <Product>WinSpace</Product>
+    <Description>WinSpace - automated workspace launcher for Windows virtual desktops</Description>
   </PropertyGroup>
 
 </Project>

@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace WinLabeler;
+namespace WinSpace;
 
 /// <summary>Window for creating, updating and deleting workplace options.</summary>
 public sealed class WorkplaceWindow : Window

@@ -6,13 +6,13 @@ using System.Windows.Threading;
 using Microsoft.Win32;
 using Forms = System.Windows.Forms;
 
-namespace WinLabeler;
+namespace WinSpace;
 
 /// <summary>Keeps one LabelWindow per virtual desktop, and owns the tray icon.</summary>
 public sealed class DesktopLabelManager : IDisposable
 {
     private const string RunKey = @"Software\Microsoft\Windows\CurrentVersion\Run";
-    private const string RunValueName = "WinLabeler";
+    private const string RunValueName = "WinSpace";
 
     public AppSettings Settings { get; } = AppSettings.Load();
 
@@ -30,10 +30,24 @@ public sealed class DesktopLabelManager : IDisposable
 
     public void Start()
     {
+        MigrateLegacyStartup();
         BuildTray();
         SystemEvents.DisplaySettingsChanged += OnDisplayChanged;
         Sync();
         _timer.Start();
+    }
+
+    /// <summary>Replaces the pre-rename "WinLabeler" Run entry so startup doesn't end up with two.</summary>
+    private static void MigrateLegacyStartup()
+    {
+        try
+        {
+            using var key = Registry.CurrentUser.OpenSubKey(RunKey, writable: true);
+            if (key?.GetValue("WinLabeler") == null) return;
+            key.DeleteValue("WinLabeler", throwOnMissingValue: false);
+            key.SetValue(RunValueName, $"\"{Environment.ProcessPath}\"");
+        }
+        catch { }
     }
 
     public void Save() => Settings.Save();
@@ -72,7 +86,7 @@ public sealed class DesktopLabelManager : IDisposable
         try
         {
             string dir = System.IO.Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "WinLabeler");
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "WinSpace");
             System.IO.Directory.CreateDirectory(dir);
             System.IO.File.AppendAllText(System.IO.Path.Combine(dir, "startup.log"),
                 $"{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff} {message}{Environment.NewLine}");
@@ -222,7 +236,7 @@ public sealed class DesktopLabelManager : IDisposable
         try
         {
             // A temp batch file lets multi-line commands work as written.
-            string file = System.IO.Path.Combine(System.IO.Path.GetTempPath(), $"winlabeler-{Guid.NewGuid():N}.cmd");
+            string file = System.IO.Path.Combine(System.IO.Path.GetTempPath(), $"winspace-{Guid.NewGuid():N}.cmd");
             System.IO.File.WriteAllText(file, BuildBatch(option.Command));
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
             {
@@ -299,7 +313,7 @@ public sealed class DesktopLabelManager : IDisposable
         _tray = new Forms.NotifyIcon
         {
             Icon = System.Drawing.SystemIcons.Application,
-            Text = "WinLabeler",
+            Text = "WinSpace",
             Visible = true,
             ContextMenuStrip = menu,
         };

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ig-ongit.github.io/WinLabeler/sitemap.xml
+Sitemap: https://ig-ongit.github.io/WinSpace/sitemap.xml

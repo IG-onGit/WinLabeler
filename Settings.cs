@@ -4,7 +4,7 @@ using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace WinLabeler;
+namespace WinSpace;
 
 public enum Corner { BottomLeft, BottomRight, TopLeft, TopRight, BottomCenter, TopCenter }
 
@@ -30,7 +30,7 @@ public sealed class AppSettings
     public List<WorkplaceOption> Workplaces { get; set; } = new();
 
     private static readonly string Dir = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "WinLabeler");
+        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "WinSpace");
     private static readonly string FilePath = Path.Combine(Dir, "settings.json");
     private static readonly JsonSerializerOptions Options = new()
     {
@@ -38,8 +38,21 @@ public sealed class AppSettings
         Converters = { new JsonStringEnumConverter() }
     };
 
+    /// <summary>One-time move of the pre-rename (WinLabeler) settings folder.</summary>
+    private static void MigrateLegacyFolder()
+    {
+        try
+        {
+            string legacy = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "WinLabeler");
+            if (Directory.Exists(legacy) && !Directory.Exists(Dir)) Directory.Move(legacy, Dir);
+        }
+        catch { /* keep going with defaults */ }
+    }
+
     public static AppSettings Load()
     {
+        MigrateLegacyFolder();
         try
         {
             if (File.Exists(FilePath))

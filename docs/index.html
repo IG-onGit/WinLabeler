@@ -3,26 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Windows Virtual Desktop Labels, On Screen | WinLabeler</title>
-<meta name="description" content="WinLabeler is a free, open-source Windows tray app that shows a colored label with a custom name on each virtual desktop, so you always know where you are.">
-<meta name="keywords" content="Windows virtual desktop label, virtual desktop name, rename virtual desktop, Windows 10 virtual desktops, Windows 11 virtual desktops, desktop label, tray app, WPF, .NET 10, open source, MIT license">
+<title>Automated Workspace Launcher for Windows Virtual Desktops | WinSpace</title>
+<meta name="description" content="WinSpace is a free, open-source Windows tray app that sets up your workspace in one click: it launches your editor, browser and tools, then labels and colors the virtual desktop.">
+<meta name="keywords" content="workspace launcher, automated workspace setup, launch apps with one click, Windows virtual desktop label, virtual desktop name, rename virtual desktop, Windows 10 virtual desktops, Windows 11 virtual desktops, desktop label, tray app, WPF, .NET 10, open source, MIT license">
 <meta name="author" content="Irakli Gzirishvili">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#0b0f17">
-<link rel="canonical" href="https://ig-ongit.github.io/WinLabeler/">
+<link rel="canonical" href="https://ig-ongit.github.io/WinSpace/">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="WinLabeler">
-<meta property="og:title" content="Windows Virtual Desktop Labels, On Screen | WinLabeler">
-<meta property="og:description" content="A free, open-source Windows tray app that shows a small colored label with a custom name on each virtual desktop.">
-<meta property="og:url" content="https://ig-ongit.github.io/WinLabeler/">
-<meta property="og:image" content="https://ig-ongit.github.io/WinLabeler/assets/github.png">
+<meta property="og:site_name" content="WinSpace">
+<meta property="og:title" content="Automated Workspace Launcher for Windows Virtual Desktops | WinSpace">
+<meta property="og:description" content="A free, open-source Windows tray app that sets up your workspace in one click and labels each virtual desktop.">
+<meta property="og:url" content="https://ig-ongit.github.io/WinSpace/">
+<meta property="og:image" content="https://ig-ongit.github.io/WinSpace/assets/github.png">
 <meta property="og:image:width" content="1280">
 <meta property="og:image:height" content="640">
-<meta property="og:image:alt" content="WinLabeler logo and the slogan: Always know which desktop you're on">
+<meta property="og:image:alt" content="WinSpace logo and the slogan: Your workspace, set up in one click">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Windows Virtual Desktop Labels, On Screen | WinLabeler">
-<meta name="twitter:description" content="A free, open-source Windows tray app that shows a small colored label with a custom name on each virtual desktop.">
-<meta name="twitter:image" content="https://ig-ongit.github.io/WinLabeler/assets/github.png">
+<meta name="twitter:title" content="Automated Workspace Launcher for Windows Virtual Desktops | WinSpace">
+<meta name="twitter:description" content="A free, open-source Windows tray app that sets up your workspace in one click and labels each virtual desktop.">
+<meta name="twitter:image" content="https://ig-ongit.github.io/WinSpace/assets/github.png">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,24 +34,24 @@
   "@graph": [
     {
       "@type": "SoftwareApplication",
-      "name": "WinLabeler",
+      "name": "WinSpace",
       "operatingSystem": "Windows 10, Windows 11 (64-bit)",
       "applicationCategory": "UtilitiesApplication",
-      "description": "A small Windows tray app that shows a rounded label with a custom name and color on each virtual desktop.",
-      "url": "https://ig-ongit.github.io/WinLabeler/",
-      "image": "https://ig-ongit.github.io/WinLabeler/assets/github.png",
-      "downloadUrl": "https://github.com/IG-onGit/WinLabeler/raw/main/WinLabeler.exe",
-      "license": "https://github.com/IG-onGit/WinLabeler/blob/main/LICENSE",
+      "description": "A small Windows tray app that launches your whole workspace in one click (editor, browser, tools) and labels each virtual desktop with a name and color.",
+      "url": "https://ig-ongit.github.io/WinSpace/",
+      "image": "https://ig-ongit.github.io/WinSpace/assets/github.png",
+      "downloadUrl": "https://github.com/IG-onGit/WinSpace/raw/main/WinSpace.exe",
+      "license": "https://github.com/IG-onGit/WinSpace/blob/main/LICENSE",
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
       "author": { "@type": "Person", "name": "Irakli Gzirishvili", "url": "https://github.com/IG-onGit" }
     },
     {
       "@type": "FAQPage",
       "mainEntity": [
-        { "@type": "Question", "name": "Is WinLabeler free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. WinLabeler is open source under the MIT license, so you can use, change and share it at no cost." } },
+        { "@type": "Question", "name": "Is WinSpace free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. WinSpace is open source under the MIT license, so you can use, change and share it at no cost." } },
         { "@type": "Question", "name": "Which versions of Windows does it support?", "acceptedAnswer": { "@type": "Answer", "text": "Windows 10 or 11, 64-bit. It was developed and tested on Windows 10 LTSC 1809. It finds the current desktop through undocumented registry values, which Microsoft may change between Windows versions." } },
         { "@type": "Question", "name": "Do I need to install .NET?", "acceptedAnswer": { "@type": "Answer", "text": "The released exe needs the .NET 10 Desktop Runtime (x64). If you build from source you can switch to a self-contained build that runs without the runtime, at the cost of a much larger file." } },
-        { "@type": "Question", "name": "Does WinLabeler send any data anywhere?", "acceptedAnswer": { "@type": "Answer", "text": "No. The app contains no network code. Your labels and workplaces are stored in a settings.json file in your own %AppData%\\WinLabeler folder." } }
+        { "@type": "Question", "name": "Does WinSpace send any data anywhere?", "acceptedAnswer": { "@type": "Answer", "text": "No. The app contains no network code. Your labels and workplaces are stored in a settings.json file in your own %AppData%\\WinSpace folder." } }
       ]
     }
   ]
@@ -95,15 +95,15 @@
 
 <header class="site-header">
   <div class="container">
-    <a class="brand" href="./" aria-label="WinLabeler home"><img src="assets/logo.svg" alt="" width="34" height="34"><span>Win<span>Labeler</span></span></a>
+    <a class="brand" href="./" aria-label="WinSpace home"><img src="assets/logo.svg" alt="" width="34" height="34"><span>Win<span>Space</span></span></a>
     <button class="burger" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Open menu"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button>
     <nav class="nav" id="site-nav" aria-label="Main">
-      <a href="#features">Features</a>
-      <a href="#how">How it works</a>
       <a href="#workplaces">Workplaces</a>
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
       <a href="#faq">FAQ</a>
       <a href="docs/">Docs</a>
-      <a class="btn btn-ghost btn-sm" href="https://github.com/IG-onGit/WinLabeler" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>GitHub</a>
+      <a class="btn btn-ghost btn-sm" href="https://github.com/IG-onGit/WinSpace" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>GitHub</a>
     </nav>
   </div>
 </header>
@@ -117,14 +117,14 @@
           <span class="badge"><span class="dot"></span>Windows 10 / 11 · x64</span>
           <span class="badge">C# · WPF · .NET 10</span>
         </div>
-        <h1>Always know <span class="grad">which virtual desktop</span> you're on</h1>
-        <p class="lead">WinLabeler is a tiny tray app that keeps a small rounded label on screen with the name of your current Windows desktop. Every desktop gets its own name, color and corner.</p>
+        <h1>Launch your <span class="grad">entire workspace</span> in one click</h1>
+        <p class="lead">WinSpace is a tiny tray app that automates your workspace setup. Define a workplace once, then open your editor, browser and tools with a single click, and see which desktop you're on at a glance.</p>
         <a class="author-pill" href="docs/#author">
           <img src="assets/Irakli%20Gzirishvili.png" alt="Irakli Gzirishvili" width="48" height="48">
           <span><small>Created by</small><strong>Irakli Gzirishvili</strong><em>Full-Stack Software Engineer · MIT OSS Provider</em></span>
         </a>
         <div class="cta-row">
-          <a class="btn btn-primary" href="https://github.com/IG-onGit/WinLabeler/raw/main/WinLabeler.exe" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Download WinLabeler.exe</a>
+          <a class="btn btn-primary" href="https://github.com/IG-onGit/WinSpace/raw/main/WinSpace.exe" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Download WinSpace.exe</a>
           <a class="btn btn-ghost" href="docs/"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg>Read the docs</a>
         </div>
         <ul class="trust">
@@ -152,45 +152,12 @@
     </div>
   </section>
 
-  <section class="block alt" id="features">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">Features</span>
-        <h2>A label that knows where you are</h2>
-        <p class="section-intro">Windows numbers your desktops but never shows the number. WinLabeler puts a name on each one.</p>
-      </div>
-      <div class="grid-3">
-        <article class="card"><div class="icon-tile"><svg class="icon" aria-hidden="true"><use href="#i-layers"/></svg></div><h3>One label per desktop</h3><p>Each virtual desktop remembers its own name, color and screen position. Switch desktops and the label follows you.</p></article>
-        <article class="card"><div class="icon-tile"><svg class="icon" aria-hidden="true"><use href="#i-pencil"/></svg></div><h3>Rename in place</h3><p>Double-click the label, type a name, press Enter. Esc cancels. An empty name falls back to the desktop number.</p></article>
-        <article class="card"><div class="icon-tile"><svg class="icon" aria-hidden="true"><use href="#i-move"/></svg></div><h3>Drag and snap</h3><p>Drag the label anywhere and it snaps to the nearest of six spots: top or bottom, left, center or right.</p></article>
-        <article class="card"><div class="icon-tile"><svg class="icon" aria-hidden="true"><use href="#i-palette"/></svg></div><h3>Your colors</h3><p>Pick from 11 preset colors or open the color picker for any custom shade, separately for every desktop.</p></article>
-        <article class="card"><div class="icon-tile"><svg class="icon" aria-hidden="true"><use href="#i-terminal"/></svg></div><h3>Workplace launcher</h3><p>Click the label for a list of workplaces. Each one runs your own commands and labels the desktop to match.</p></article>
-        <article class="card"><div class="icon-tile"><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg></div><h3>Local and private</h3><p>Settings live in a JSON file in your AppData folder. The app has no network code and no account.</p></article>
-      </div>
-    </div>
-  </section>
-
-  <section class="block" id="how">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">How it works</span>
-        <h2>Three steps, no setup screen</h2>
-        <p class="section-intro">There is nothing to configure before it is useful.</p>
-      </div>
-      <ol class="steps">
-        <li class="card"><h3>Run the exe</h3><p>WinLabeler starts in the tray and shows one label, bottom center, with your desktop number on it.</p></li>
-        <li class="card"><h3>Switch desktops</h3><p>The app checks the active desktop several times a second and updates the label to that desktop's saved name and color.</p></li>
-        <li class="card"><h3>Make it yours</h3><p>Rename it, recolor it, drag it to a corner, or right-click for options like Always on top and Start with Windows.</p></li>
-      </ol>
-    </div>
-  </section>
-
-  <section class="block alt" id="workplaces">
+  <section class="block" id="workplaces">
     <div class="container split">
       <div>
         <span class="eyebrow">Workplaces</span>
-        <h2>One click to set up a desktop</h2>
-        <p class="section-intro">Turn a desktop into a ready workspace. A workplace is a label, a color and a list of commands that run through <code class="inline">cmd.exe</code>.</p>
+        <h2>Automated workspace setup</h2>
+        <p class="section-intro">Turn any virtual desktop into a ready workspace. A workplace is a label, a color and a list of commands that run through <code class="inline">cmd.exe</code>.</p>
         <ul class="checks">
           <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Open your editor, browser and tools with one click</li>
           <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>The current desktop is labeled with the workplace you launched</li>
@@ -202,7 +169,7 @@
         <pre><code data-lang="bat" data-title="Workplace commands">code C:\Work\my-app
 start https://github.com
 rem each line is run on its own</code></pre>
-        <pre><code data-lang="json" data-title="%AppData%\WinLabeler\settings.json">{
+        <pre><code data-lang="json" data-title="%AppData%\WinSpace\settings.json">{
   "Workplaces": [
     {
       "Label": "Work",
@@ -215,6 +182,39 @@ rem each line is run on its own</code></pre>
     </div>
   </section>
 
+  <section class="block alt" id="features">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Features</span>
+        <h2>Automation first, labels to keep you oriented</h2>
+        <p class="section-intro">WinSpace starts everything you need and names each virtual desktop, so you never lose your place.</p>
+      </div>
+      <div class="grid-3">
+        <article class="card"><div class="icon-tile"><svg class="icon" aria-hidden="true"><use href="#i-terminal"/></svg></div><h3>Workplace launcher</h3><p>Click the label for your workplaces. Each one runs your own commands and labels the desktop to match.</p></article>
+        <article class="card"><div class="icon-tile"><svg class="icon" aria-hidden="true"><use href="#i-layers"/></svg></div><h3>One label per desktop</h3><p>Each virtual desktop remembers its own name, color and screen position. Switch desktops and the label follows you.</p></article>
+        <article class="card"><div class="icon-tile"><svg class="icon" aria-hidden="true"><use href="#i-pencil"/></svg></div><h3>Rename in place</h3><p>Double-click the label, type a name, press Enter. Esc cancels. An empty name falls back to the desktop number.</p></article>
+        <article class="card"><div class="icon-tile"><svg class="icon" aria-hidden="true"><use href="#i-move"/></svg></div><h3>Drag and snap</h3><p>Drag the label anywhere and it snaps to the nearest of six spots: top or bottom, left, center or right.</p></article>
+        <article class="card"><div class="icon-tile"><svg class="icon" aria-hidden="true"><use href="#i-palette"/></svg></div><h3>Your colors</h3><p>Pick from 11 preset colors or open the color picker for any custom shade, separately for every desktop.</p></article>
+        <article class="card"><div class="icon-tile"><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg></div><h3>Local and private</h3><p>Settings live in a JSON file in your AppData folder. The app has no network code and no account.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="how">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">How it works</span>
+        <h2>Set it up once, launch it forever</h2>
+        <p class="section-intro">Three steps from install to a ready workspace.</p>
+      </div>
+      <ol class="steps">
+        <li class="card"><h3>Define a workplace</h3><p>Run WinSpace, click the label and open <strong>Manage</strong>. Give the workplace a name, a color and one command per line.</p></li>
+        <li class="card"><h3>Click to launch</h3><p>Pick the workplace from the list. WinSpace runs your commands and starts your editor, browser and tools.</p></li>
+        <li class="card"><h3>Stay oriented</h3><p>The desktop is labeled and colored to match. Switch desktops and each one keeps its own name, color and corner.</p></li>
+      </ol>
+    </div>
+  </section>
+
   <section class="block" id="faq">
     <div class="container">
       <div class="section-head">
@@ -222,10 +222,10 @@ rem each line is run on its own</code></pre>
         <h2>Questions people ask first</h2>
       </div>
       <div class="faq">
-        <details open><summary>Is WinLabeler free?<svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></summary><p>Yes. WinLabeler is open source under the MIT license, so you can use, change and share it at no cost.</p></details>
+        <details open><summary>Is WinSpace free?<svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></summary><p>Yes. WinSpace is open source under the MIT license, so you can use, change and share it at no cost.</p></details>
         <details><summary>Which versions of Windows does it support?<svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></summary><p>Windows 10 or 11, 64-bit. It was developed and tested on Windows 10 LTSC 1809. It finds the current desktop through undocumented registry values, which Microsoft may change between Windows versions.</p></details>
         <details><summary>Do I need to install .NET?<svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></summary><p>The released exe needs the .NET 10 Desktop Runtime (x64). If you build from source you can switch to a self-contained build that runs without the runtime, at the cost of a much larger file.</p></details>
-        <details><summary>Does WinLabeler send any data anywhere?<svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></summary><p>No. The app contains no network code. Your labels and workplaces are stored in a settings.json file in your own %AppData%\WinLabeler folder.</p></details>
+        <details><summary>Does WinSpace send any data anywhere?<svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></summary><p>No. The app contains no network code. Your labels and workplaces are stored in a settings.json file in your own %AppData%\WinSpace folder.</p></details>
       </div>
     </div>
   </section>
@@ -233,11 +233,11 @@ rem each line is run on its own</code></pre>
   <section class="block" style="padding-top:0">
     <div class="container">
       <div class="cta-band">
-        <h2>Never lose track of a desktop again</h2>
-        <p>Download the exe, run it, and name your first desktop in a double-click.</p>
+        <h2>Stop setting up your workspace by hand</h2>
+        <p>Download the exe, run it, and create your first workplace in a minute.</p>
         <div class="cta-row">
           <a class="btn btn-primary" href="docs/#installation"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Get started</a>
-          <a class="btn btn-ghost" href="https://github.com/IG-onGit/WinLabeler" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>Star on GitHub</a>
+          <a class="btn btn-ghost" href="https://github.com/IG-onGit/WinSpace" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>Star on GitHub</a>
         </div>
       </div>
     </div>
@@ -251,7 +251,7 @@ rem each line is run on its own</code></pre>
       <a href="docs/">Documentation</a>
       <a href="docs/#requirements">Requirements</a>
       <a href="docs/#license">License</a>
-      <a href="https://github.com/IG-onGit/WinLabeler" rel="noopener">GitHub</a>
+      <a href="https://github.com/IG-onGit/WinSpace" rel="noopener">GitHub</a>
     </nav>
   </div>
 </footer>

@@ -1,17 +1,17 @@
-name: Build WinLabeler
+name: Build WinSpace
 
 on:
   push:
     branches: [main]
     paths-ignore:
-      - WinLabeler.exe
+      - WinSpace.exe
   workflow_dispatch:
 
 permissions:
   contents: write
 
 concurrency:
-  group: build-winlabeler
+  group: build-winspace
   cancel-in-progress: false
 
 jobs:
@@ -28,19 +28,19 @@ jobs:
           dotnet-quality: ga
 
       - name: Publish
-        run: dotnet publish WinLabeler.csproj -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -o publish
+        run: dotnet publish WinSpace.csproj -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -o publish
 
       - name: Copy exe to repository root
-        run: Copy-Item publish/WinLabeler.exe WinLabeler.exe -Force
+        run: Copy-Item publish/WinSpace.exe WinSpace.exe -Force
 
       - name: Commit and push
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add WinLabeler.exe
+          git add WinSpace.exe
           if git diff --cached --quiet; then
-            echo "WinLabeler.exe unchanged, nothing to commit."
+            echo "WinSpace.exe unchanged, nothing to commit."
             exit 0
           fi
           git commit -m "Update [$(date -u +%Y-%m-%d)]"

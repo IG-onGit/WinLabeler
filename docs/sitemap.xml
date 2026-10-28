@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ig-ongit.github.io/WinLabeler/</loc>
+    <loc>https://ig-ongit.github.io/WinSpace/</loc>
     <lastmod>2026-10-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://ig-ongit.github.io/WinLabeler/docs/</loc>
+    <loc>https://ig-ongit.github.io/WinSpace/docs/</loc>
     <lastmod>2026-10-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

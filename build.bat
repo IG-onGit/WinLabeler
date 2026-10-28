@@ -3,13 +3,13 @@ cd /d "%~dp0"
 
 where dotnet >nul 2>nul
 if errorlevel 1 (
-    echo .NET SDK was not found. Please install it first - see README.md, Step 1.
+    echo .NET SDK was not found. Please install it first. See README.md.
     pause
     exit /b 1
 )
 
-echo Building WinLabeler...
-dotnet publish -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -o "%~dp0publish"
+echo Building WinSpace...
+dotnet publish WinSpace.csproj -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -o "%~dp0publish"
 if errorlevel 1 (
     echo.
     echo Build failed. See the messages above.
@@ -19,6 +19,6 @@ if errorlevel 1 (
 
 echo.
 echo Done! Your program is here:
-echo %~dp0publish\WinLabeler.exe
+echo %~dp0publish\WinSpace.exe
 explorer "%~dp0publish"
 pause

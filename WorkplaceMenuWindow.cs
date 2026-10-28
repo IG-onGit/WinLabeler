@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace WinLabeler;
+namespace WinSpace;
 
 /// <summary>Centered list of workplace options, each in its own color, with "Manage" on top.</summary>
 public sealed class WorkplaceMenuWindow : Window

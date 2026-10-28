@@ -1,16 +1,22 @@
-# WinLabeler
+# WinSpace
 
-A tiny Windows tray app that shows a small rounded label (for example "Work" or
-"Email") on each of your virtual desktops, so you always know which desktop you
-are on. Every desktop has its own name, color and screen corner.
+**Set up your whole workspace with one click.** WinSpace is a tiny Windows tray
+app that turns each virtual desktop into a ready-to-go workspace: pick a
+workplace and it launches your editor, browser and tools, then labels and
+colors the desktop so you always know where you are.
 
 ## Features
 
-- One label that follows you and shows the current desktop's name
+- **Workplace launcher** - a workplace is a label, a color and a list of
+  commands (one per line, run through `cmd.exe`). One click starts everything
+- **Automated setup** - the desktop is labeled and colored to match the
+  workplace you launched
+- **Built-in workplace manager** - add, edit and delete workplaces without touching files
+- One label per virtual desktop, each with its own name, color and screen corner
 - Double-click to rename, drag to move (snaps to the nearest corner)
-- 10 preset background colors plus a custom color picker
+- 11 preset background colors plus a custom color picker
 - Optional "Always on top" and "Start with Windows"
-- Settings saved per desktop in `%AppData%\WinLabeler\settings.json`
+- Local and private: settings saved in `%AppData%\WinSpace\settings.json`, no network code
 
 ## Requirements
 
@@ -25,9 +31,9 @@ are on. Every desktop has its own name, color and screen corner.
 
 ## Install
 
-**From a release:** download `WinLabeler.exe` from the
+**From a release:** download `WinSpace.exe` from the
 [Releases](../../releases) page, put it in a permanent folder such as
-`C:\Tools\WinLabeler`, and run it. If SmartScreen warns you, click
+`C:\Tools\WinSpace`, and run it. If SmartScreen warns you, click
 **More info -> Run anyway** (the exe is not code-signed).
 
 **From source:**
@@ -39,7 +45,7 @@ cd <repository folder>
 build.bat
 ```
 
-The exe is created at `publish\WinLabeler.exe`. For a build that runs
+The exe is created at `publish\WinSpace.exe`. For a build that runs
 without the .NET runtime installed, change `--self-contained false` to
 `--self-contained true` in `build.bat` (the file will be much larger).
 
@@ -47,6 +53,8 @@ without the .NET runtime installed, change `--self-contained false` to
 
 | Action | How |
 |---|---|
+| Launch a workplace | Click the label, then pick a workplace |
+| Add or edit workplaces | Click the label -> **Manage** (label, commands, color) |
 | Rename the label | Double-click it, type the name, press Enter (Esc cancels) |
 | Move the label | Drag it - it snaps to the nearest screen corner |
 | Change the color | Right-click -> **Background color** (presets or **Custom...**) |
@@ -55,7 +63,7 @@ without the .NET runtime installed, change `--self-contained false` to
 | Start with Windows | Right-click -> **Start with Windows** |
 | Quit | Right-click the label or the tray icon -> **Exit** |
 
-"Start with Windows" adds a `WinLabeler` entry under
+"Start with Windows" adds a `WinSpace` entry under
 `HKCU\Software\Microsoft\Windows\CurrentVersion\Run` that points to the exe's
 current path, so don't move the exe afterwards (or toggle the option off and on
 again after moving it).
@@ -63,14 +71,14 @@ again after moving it).
 ## Uninstall
 
 1. Right-click the label and untick **Start with Windows**.
-2. Right-click -> **Exit WinLabeler**.
-3. Delete the exe. Optionally delete `%AppData%\WinLabeler` to remove settings.
+2. Right-click -> **Exit**.
+3. Delete the exe. Optionally delete `%AppData%\WinSpace` to remove settings.
 
 ## Troubleshooting
 
 - **`build.bat` says ".NET SDK was not found"** - install the SDK, then reopen your terminal.
 - **Build error about the target framework** - your SDK is older; change
-  `net10.0-windows` in `WinLabeler.csproj` to match it (e.g. `net8.0-windows`).
+  `net10.0-windows` in `WinSpace.csproj` to match it (e.g. `net8.0-windows`).
 - **I don't see the label** - check the corner above the taskbar and the tray icon.
   With "Always on top" off, windows can cover the label.
 - **A label shows just its number after renaming** - you saved an empty name, which means "use the default".

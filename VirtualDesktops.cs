@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
 
-namespace WinLabeler;
+namespace WinSpace;
 
 internal static class VirtualDesktops
 {

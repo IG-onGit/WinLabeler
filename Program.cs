@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Windows;
 
-namespace WinLabeler;
+namespace WinSpace;
 
 internal static class Program
 {
@@ -10,7 +10,7 @@ internal static class Program
     private static void Main()
     {
         // Only one instance at a time.
-        using var mutex = new Mutex(true, "WinLabeler.SingleInstance", out bool isNew);
+        using var mutex = new Mutex(true, "WinSpace.SingleInstance", out bool isNew);
         if (!isNew) return;
 
         var app = new Application { ShutdownMode = ShutdownMode.OnExplicitShutdown };

@@ -1,4 +1,4 @@
-/* WinLabeler site behaviour: code highlighter, copy buttons, burger menu, docs sections. */
+/* WinSpace site behaviour: code highlighter, copy buttons, burger menu, docs sections. */
 (function () {
   'use strict';
   document.documentElement.classList.add('js');
